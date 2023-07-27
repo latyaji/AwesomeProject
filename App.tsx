@@ -6,7 +6,7 @@ const App = () => {
     <View>
       <StatusBar hidden={true}/>
       <SafeAreaView>
-         <Text>App</Text>
+         <Text>App shivani</Text>
       </SafeAreaView>
      
     </View>
