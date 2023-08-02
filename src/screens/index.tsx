@@ -1,0 +1,10 @@
+export * from '../screens/Home/index'
+export * from '../screens/SplashScreen/index'
+export * from '../screens/Paymentmode/index'
+export * from '../screens/OnboardingType/index'
+export * from './AadharUpload/index'
+export * from '../screens/Pandoucment/index'
+export * from '../screens/BankAccount/index'
+export * from '../screens/AddressDetails/index'
+export * from '../screens/Submitteddata/index'
+
