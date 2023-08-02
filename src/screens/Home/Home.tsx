@@ -1,98 +1,3 @@
-// import React, {useState } from 'react';
-// import { Button, SafeAreaView, View, Text, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
-// import RNPickerSelect from "react-native-picker-select";
-// import { PrimaryButton } from '../../component';
-// import { styles,pickerSelectStyles } from '../../style/Styles';
-
-
-// export const Home = ({navigation}) => {
-  
-//   const [city, setCity] = useState("");
- 
-
-//   const [formData, setFormData] = useState({
-//         city: '',
-//         ridername: '',
-//         conatct:'',
-//         securityamount:''
-        
-//       });
-
-//   const [submittedData, setSubmittedData] = useState([]);
-
-//   const handleSubmit = () => {
-//     setSubmittedData([...submittedData, formData]);
-//     setFormData({
-//         city: '',
-//         ridername: '',
-//         conatct:'',
-//         securityamount:''
-//     });
-//     navigation.navigate('Payment', { submittedData: [...submittedData, formData] });
-//   };
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <KeyboardAvoidingView behavior='padding'>
-//         <ScrollView>
-//           <Text style={styles.headertxt}>Form Details</Text>
-//           <Text style={styles.labeltxt}>City</Text>
-//           <View style={styles.inputfielddropdown}>
-//             <RNPickerSelect
-//               // onValueChange={(city) => setCity(city)}
-//               onValueChange={(text) => setFormData({ ...formData, city: text })}
-//               items={[
-//                 { label: "Indore", value: "Indore" },
-//                 { label: "Bhopal", value: "Bhopal" },
-//                 { label: "Ujjain", value: "Ujjain" },
-//                 { label: "Rewa", value: "Rewa" },
-//                 { label: "Satna", value: "Satna" },
-//                 { label: "Dewas", value: "Dewas" },
-//               ]}
-//               style={pickerSelectStyles}
-//             />
-//           </View>
-//           <Text style={styles.labeltxt}>Rider Name</Text>
-//           <TextInput 
-//             value={formData.ridername}
-//             onChangeText={(text) => setFormData({ ...formData, ridername: text })}
-//             style={styles.inputfield} />
-//           <Text style={styles.labeltxt}>Contact No.</Text>
-//           <TextInput
-//            value={formData.conatct}
-//            onChangeText={(text) => setFormData({ ...formData, conatct: text })}
-//             keyboardType='numeric'
-//             maxLength={10}
-//             style={styles.inputfield} />
-//           <Text style={styles.labeltxt}>Security Amount</Text>
-
-//           <TextInput
-//             value={formData.securityamount}
-//             onChangeText={(text) => setFormData({ ...formData, securityamount: text })}
-//             maxLength={8}
-//             keyboardType='numeric'
-//             style={styles.inputfield} />
-//             <TouchableOpacity 
-//              onPress={handleSubmit}
-//               style={styles.buttoncontainer}
-//               >
-//                <Text style={styles.buttontxt}>Next</Text>
-//             </TouchableOpacity>
-//           {/* <PrimaryButton
-//             title="Next"
-//             buttonText='Payment'
-//             navigation={navigation}
-//           /> */}
-//         </ScrollView>
-//       </KeyboardAvoidingView>
-//     </SafeAreaView>
-
-
-
-//   )
-// }
-
-
 import React, { useState } from 'react';
 import { Button, SafeAreaView, View, Text, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import RNPickerSelect from "react-native-picker-select";
@@ -163,8 +68,9 @@ export const Home = ({ navigation }) => {
               ]}
               style={pickerSelectStyles}
             />
-            {formErrors.city && <Text style={styles.errorText}>{formErrors.city}</Text>}
           </View>
+          {formErrors.city && <Text style={styles.errorText}>{formErrors.city}</Text>}
+
           <Text style={styles.labeltxt}>Rider Name</Text>
           <TextInput
             value={formData.ridername}

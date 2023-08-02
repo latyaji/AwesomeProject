@@ -87,6 +87,7 @@ import { PrimaryButton } from '../../component';
 export const Payment = ({ navigation, route }) => {
     const { submittedData } = route.params;
     const [paymentdata, setPaymentdata] = useState({
+        
         paymentridername: '',
         paymentcontactno: ''
     });
@@ -97,7 +98,10 @@ export const Payment = ({ navigation, route }) => {
 
     const validateForm = () => {
         let errors = {};
-        if (paymentmode === "Cash") {
+    
+        if (!paymentmode) {
+            errors.paymentmode = "Payment mode is required.";
+        } else if (paymentmode === "Cash") {
             if (!paymentdata.paymentridername) {
                 errors.paymentridername = "Rider name is required.";
             }
@@ -105,9 +109,11 @@ export const Payment = ({ navigation, route }) => {
                 errors.paymentcontactno = "Contact number is required.";
             }
         }
+    
         setFormErrors(errors);
         return Object.keys(errors).length === 0;
     };
+
 
     const handlepaymentSubmit = () => {
         const isValid = validateForm();
@@ -120,6 +126,9 @@ export const Payment = ({ navigation, route }) => {
             navigation.navigate('Onboarding', { paymentsumbiteddata: [...paymentsumbiteddata, paymentdata] });
         }
     }
+
+
+
 
     return (
         <View>
@@ -135,6 +144,7 @@ export const Payment = ({ navigation, route }) => {
                     style={pickerSelectStyles}
                 />
             </View>
+                    {formErrors.paymentmode && <Text style={styles.errorText}>{formErrors.paymentmode}</Text>}
 
             {paymentmode === "Cash" &&
                 <View>
@@ -150,12 +160,13 @@ export const Payment = ({ navigation, route }) => {
                         onChangeText={(text) => setPaymentdata({ ...paymentdata, paymentcontactno: text })}
                         value={paymentdata.paymentcontactno}
                         keyboardType='numeric'
+                        maxLength={10}
                         style={styles.inputfield} />
                     {formErrors.paymentcontactno && <Text style={styles.errorText}>{formErrors.paymentcontactno}</Text>}
                 </View>
             }
 
-            {paymentmode === "Online" && navigation.navigate('Onboarding')}
+            {/* {paymentmode === "Online" && navigation.navigate('Onboarding')} */}
 
             <TouchableOpacity
                 onPress={handlepaymentSubmit}
