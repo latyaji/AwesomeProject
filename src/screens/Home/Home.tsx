@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Button, SafeAreaView, View, Text, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { Button, SafeAreaView, View, Text, Platform, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import RNPickerSelect from "react-native-picker-select";
 import { PrimaryButton } from '../../component';
 import { styles, pickerSelectStyles } from '../../style/Styles';
+import axios from 'axios';
+
 
 export const Home = ({ navigation }) => {
-  const [city, setCity] = useState("");
+  
 
   const [formData, setFormData] = useState({
     city: '',
@@ -13,7 +15,7 @@ export const Home = ({ navigation }) => {
     contact: '',
     securityamount: ''
   });
-
+  // const [city, setCity] = useState("");
   const [submittedData, setSubmittedData] = useState([]);
   const [formErrors, setFormErrors] = useState({});
 
@@ -35,36 +37,46 @@ export const Home = ({ navigation }) => {
     return Object.keys(errors).length === 0;
   };
 
+
+
   const handleSubmit = () => {
     const isValid = validateForm();
     if (isValid) {
       setSubmittedData([...submittedData, formData]);
       setFormData({
-        city: '',
+         city: '',
         ridername: '',
         contact: '',
         securityamount: ''
       });
+      // setCity("");
       navigation.navigate('Payment', { submittedData: [...submittedData, formData] });
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior='padding'>
-        <ScrollView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={90}
+        style={{ flex: 1 }}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <Text style={styles.headertxt}>Form Details</Text>
           <Text style={styles.labeltxt}>City</Text>
           <View style={styles.inputfielddropdown}>
             <RNPickerSelect
-              onValueChange={(text) => setFormData({ ...formData, city: text })}
+              onValueChange={(city) => setFormData({...formData, city: city})}
+              value={formData?.city}
+              //onValueChange={(paymentmode) => setpaymentmode(paymentmode)}
               items={[
+                { label: "Pune", value: "Pune" },
+                { label: "Delhi", value: "Delhi" },
+                { label: "Bangalore", value: "Bangalore" },
+                { label: "Visakhapatnam	", value: "Visakhapatnam	" },
+                { label: "Hyderabad", value: "Hyderabad" },
+                { label: "Lucknow", value: "Lucknow" },
                 { label: "Indore", value: "Indore" },
-                { label: "Bhopal", value: "Bhopal" },
-                { label: "Ujjain", value: "Ujjain" },
-                { label: "Rewa", value: "Rewa" },
-                { label: "Satna", value: "Satna" },
-                { label: "Dewas", value: "Dewas" },
               ]}
               style={pickerSelectStyles}
             />

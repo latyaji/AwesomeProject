@@ -32,7 +32,8 @@ export const styles = StyleSheet.create({
       marginTop: 12,
       marginHorizontal: 12,
       borderRadius: 6,
-      padding:Platform.OS === "ios" ? 13 : null
+      padding:Platform.OS === "ios" ? 13 : null,
+      color:"#000"
     },
     inputfielddropdown: {
       borderWidth: 1,

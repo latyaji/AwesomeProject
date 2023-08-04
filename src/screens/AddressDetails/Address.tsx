@@ -1,10 +1,15 @@
 import { SafeAreaView, Image, View, Text, KeyboardAvoidingView, TouchableOpacity, TextInput, ScrollView, Platform, Alert, StyleSheet } from 'react-native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState,useEffect } from 'react';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import { styles } from '../../style/Styles';
 import { upload } from '../../assest';
+
+
+
+
 export const Address = ({ navigation, route }) => {
   const { passbooksumbiteddata } = route?.params
+  console.log("address kai pehle ka dat",passbooksumbiteddata)
   const [sumbiteddata, setsumbiteddata] = useState(passbooksumbiteddata); // Initialize with the submittedData
 
   const [validationErrors, setValidationErrors] = useState({
@@ -101,15 +106,23 @@ export const Address = ({ navigation, route }) => {
     })
 
 
-    navigation.navigate('Submitdata', { sabmidatastore: [...sabmidatastore, addressuploaddata] });
+   
+     navigation.navigate('Submitdata', { sabmidatastore: [...sabmidatastore, addressuploaddata] });
   }
+
+  
+
+
 
 
   return (
 
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior='padding'>
-        <ScrollView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={100}
+        style={{ flex: 1 }} >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <Text style={styles.headertxt}>Address Details</Text>
           <Text style={styles.labeltxt}>Current Address</Text>
           <TextInput
@@ -131,6 +144,7 @@ export const Address = ({ navigation, route }) => {
           ) : null}
           <Text style={styles.labeltxt}>Charger No.</Text>
           <TextInput
+          keyboardType='numeric'
             onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, chargerno: text })}
             value={addressuploaddata.chargerno}
             style={styles.inputfield} />
@@ -140,6 +154,7 @@ export const Address = ({ navigation, route }) => {
 
           <Text style={styles.labeltxt}>Battery 1</Text>
           <TextInput
+          keyboardType='numeric'
             onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, batterone: text })}
             value={addressuploaddata.batterone}
             style={styles.inputfield} />
@@ -150,6 +165,7 @@ export const Address = ({ navigation, route }) => {
 
           <Text style={styles.labeltxt}>Battery 2</Text>
           <TextInput
+          keyboardType='numeric'
             onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, battertwo: text })}
             value={addressuploaddata.battertwo}
             style={styles.inputfield} />
@@ -177,7 +193,8 @@ export const Address = ({ navigation, route }) => {
               borderWidth: 1,
               margin: 12,
               alignSelf: "center",
-              paddingLeft: 10
+              paddingLeft: 10,
+              color:"#000"
             }}
           />
           {validationErrors.remark ? (

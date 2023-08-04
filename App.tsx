@@ -34,3 +34,36 @@ export default App;
 
 
 
+// import { View, Text } from 'react-native'
+// import React, { useEffect } from 'react'
+// import axios from 'axios';
+// // const baseUrl = 'https://reqres.in';
+
+// const baseUrl = 'http://43.204.22.176:3000//users';
+
+// const App = () => {
+
+// useEffect(()=>{
+//   fetchUser()
+// },[])
+
+// const fetchUser = async () => {
+//   try{
+//     const url = `${baseUrl}`;
+//     const response = await axios.get(url);
+//     console.log(response.data);
+//   }catch(error){
+//     console.log("error======>>>>>",error)
+//   }
+ 
+// };
+
+//   return (
+//     <View>
+//       <Text>App</Text>
+//     </View>
+//   )
+// }
+
+// export default App
+

@@ -7,7 +7,6 @@ import { upload } from '../../assest';
 export const PandoucmentUplaod = ({ navigation, route }) => {
 
   const routes = route?.params
-  // const [panfileResponse, setpanFileResponse] = useState([]);
 
   const [panuploaddata, setPanuploaddata] = useState({
     pancardno: " ",
@@ -37,7 +36,7 @@ export const PandoucmentUplaod = ({ navigation, route }) => {
     }
   }, []);
 
-  const [pansumbiteddata, setPansumbiteddata] = useState(routes?.aadharsumbiteddata); // Initialize with the submittedData
+  const [pansumbiteddata, setPansumbiteddata] = useState(routes?.aadharsumbiteddata); 
 
 
 const handlePanuploadSubmit = () => {
@@ -45,7 +44,6 @@ const handlePanuploadSubmit = () => {
     panNumber: '',
   });
 
-  // Form validation checks
   if (!panuploaddata.pancardno || panuploaddata.pancardno.length !== 12) {
     setValidationErrors((prev) => ({ ...prev, panNumber: 'Please enter a valid pan cardno. card number (12 digits)' }));
     return;

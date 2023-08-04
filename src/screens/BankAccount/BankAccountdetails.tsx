@@ -6,7 +6,6 @@ import { styles, pickerSelectStyles } from '../../style/Styles';
 import { PrimaryButton } from '../../component';
 import { upload } from '../../assest';
 export const BankAccountdetails = ({ navigation , route }) => {
-  //console.log("pan card ka dadatat details------ =====",route?.params)
   const routes = route?.params
   const [passbookuploaddata, setPassbookuploaddata] = useState({
     panfileResponse: []
@@ -26,7 +25,7 @@ export const BankAccountdetails = ({ navigation , route }) => {
         ],
         allowMultiSelection: true,
       });
-     // setpanFileResponse(response);
+     
      setPassbookuploaddata({...passbookuploaddata, panfileResponse: response })
 
 
@@ -69,11 +68,6 @@ const handlePassbookSubmit = () => {
             >
               <Text style={styles.buttontxt}>Next</Text>
             </TouchableOpacity>
-            {/* <PrimaryButton
-              title="Next"
-              buttonText='Address'
-              navigation={navigation}
-            /> */}
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>

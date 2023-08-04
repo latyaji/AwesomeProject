@@ -1,8 +1,6 @@
-
-
 import React, { useCallback, useState } from 'react';
 import { Button, SafeAreaView, Image, View, Text, KeyboardAvoidingView, TouchableOpacity, TextInput, ScrollView, Platform } from 'react-native';
-import DocumentPicker from 'react-native-document-picker'; // Note the import change
+import DocumentPicker from 'react-native-document-picker';
 import RNPickerSelect from "react-native-picker-select";
 import { styles, pickerSelectStyles } from '../../style/Styles';
 import { upload } from '../../assest';
@@ -55,7 +53,7 @@ export const Document = ({ navigation, route }) => {
       ...aadharuploaddata,
       adharfileResponse: [],
     });
-  
+
     navigation.navigate('PandoucmentUplaod', { aadharsumbiteddata: [...aadharsumbiteddata, aadharuploaddata] });
   }
 
