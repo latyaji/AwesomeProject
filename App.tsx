@@ -23,7 +23,6 @@ function App() {
         <Stack.Screen name="BankAccountdetails" component={BankAccountdetails} /> 
         <Stack.Screen name="Address" component={Address} />
         <Stack.Screen name="Submitdata" component={Submitdata} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
