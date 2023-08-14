@@ -5,7 +5,6 @@ export const Splash = ({ navigation }) => {
   useEffect(()=>{
     setTimeout(()=>{
       navigation.navigate('Home')
-
     },1000)
 
   },[])

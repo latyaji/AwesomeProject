@@ -21,12 +21,7 @@ export const Submitdata = async({navigation,route}) => {
         console.log("allldata",alldata)
       } catch (error) {
         console.error('Error loading data:', error);
-      }
-    
-   
-     
-    
-  
+      }   
 }
 
 

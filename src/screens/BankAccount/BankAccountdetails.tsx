@@ -5,7 +5,7 @@ import RNPickerSelect from "react-native-picker-select";
 import { styles, pickerSelectStyles } from '../../style/Styles';
 import { PrimaryButton } from '../../component';
 import { upload } from '../../assest';
-export const BankAccountdetails = ({ navigation , route }) => {
+export const BankAccountdetails = ({ navigation, route }) => {
   const routes = route?.params
   const [passbookuploaddata, setPassbookuploaddata] = useState({
     panfileResponse: []
@@ -25,8 +25,8 @@ export const BankAccountdetails = ({ navigation , route }) => {
         ],
         allowMultiSelection: true,
       });
-     
-     setPassbookuploaddata({...passbookuploaddata, panfileResponse: response })
+
+      setPassbookuploaddata({ ...passbookuploaddata, panfileResponse: response })
 
 
     } catch (err) {
@@ -34,14 +34,14 @@ export const BankAccountdetails = ({ navigation , route }) => {
     }
   }, []);
 
-const handlePassbookSubmit = () => {
-  setPassbooksumbiteddata([...passbooksumbiteddata, passbookuploaddata])
-  setPassbookuploaddata({
-    panfileResponse: []
-  })
+  const handlePassbookSubmit = () => {
+    setPassbooksumbiteddata([...passbooksumbiteddata, passbookuploaddata])
+    setPassbookuploaddata({
+      panfileResponse: []
+    })
 
-  navigation.navigate('Address', { passbooksumbiteddata: [...passbooksumbiteddata, passbookuploaddata] });
-}
+    navigation.navigate('Address', { passbooksumbiteddata: [...passbooksumbiteddata, passbookuploaddata] });
+  }
 
   return (
 
@@ -60,9 +60,9 @@ const handlePassbookSubmit = () => {
           {passbookuploaddata.panfileResponse.map((file, index) => (
             passbookuploaddata.panfileResponse ? <Image source={{ uri: file?.uri }} style={styles.img} /> : <Text>Choose File</Text>
           ))}
-          
+
           <TouchableOpacity>
-          <TouchableOpacity
+            <TouchableOpacity
               onPress={handlePassbookSubmit}
               style={styles.buttoncontainer}
             >

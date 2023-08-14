@@ -102,3 +102,7 @@ export const Payment = ({ navigation, route }) => {
         </SafeAreaView>
     )
 }
+
+
+
+

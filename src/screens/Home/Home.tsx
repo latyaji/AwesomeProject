@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { Button, SafeAreaView, View, Text, Platform, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import {SafeAreaView, View, Text, Platform, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import RNPickerSelect from "react-native-picker-select";
-import { PrimaryButton } from '../../component';
 import { styles, pickerSelectStyles } from '../../style/Styles';
-import axios from 'axios';
 
 
 export const Home = ({ navigation }) => {
-  
 
   const [formData, setFormData] = useState({
     city: '',
@@ -15,7 +12,6 @@ export const Home = ({ navigation }) => {
     contact: '',
     securityamount: ''
   });
-  // const [city, setCity] = useState("");
   const [submittedData, setSubmittedData] = useState([]);
   const [formErrors, setFormErrors] = useState({});
 
@@ -33,7 +29,10 @@ export const Home = ({ navigation }) => {
     if (!formData.securityamount) {
       errors.securityamount = "Security amount is required.";
     }
+    console.log("formErrors==========",formErrors)
     setFormErrors(errors);
+    console.log("uuuuuuuuuuformErrors==========",formErrors)
+
     return Object.keys(errors).length === 0;
   };
 
@@ -58,9 +57,9 @@ export const Home = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={90}
+        keyboardVerticalOffset={90} 
         style={{ flex: 1 }}
-      >
+        >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <Text style={styles.headertxt}>Form Details</Text>
           <Text style={styles.labeltxt}>City</Text>
@@ -115,32 +114,6 @@ export const Home = ({ navigation }) => {
     </SafeAreaView>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

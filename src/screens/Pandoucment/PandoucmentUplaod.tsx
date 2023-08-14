@@ -49,7 +49,7 @@ const handlePanuploadSubmit = () => {
     return;
   }
 
-  setPansumbiteddata([...pansumbiteddata, panuploaddata])
+  setPansumbiteddata([...pansumbiteddata, panuploaddata]) 
   setPanuploaddata({
     //pancardno: " ",
     ...panuploaddata,

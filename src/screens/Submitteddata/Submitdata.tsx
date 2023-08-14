@@ -10,8 +10,11 @@ const baseUrl = "http://43.204.22.176:3000/users";
 
 export const Submitdata = ({ navigation, route }) => {
   const { sabmidatastore } = route?.params;
-  console.log("alldata===>>", sabmidatastore)
-  console.log("sabmidatastore[3]=========",sabmidatastore[3]?.adharfileResponse[4])
+  //console.log("alldata===>>", sabmidatastore)
+  // console.log("sabmidatastore[3333]=========!!!!!!!",sabmidatastore[3])
+  // console.log("sabmidatastore[44444]=========!!!!!!!",sabmidatastore[4])
+  // console.log("sabmidatastore[555555]=========!!!!!!!",sabmidatastore[5])
+  // console.log("sabmidatastore[66666]=========!!!!!!!",sabmidatastore[6])
 
 
 
@@ -42,59 +45,44 @@ export const Submitdata = ({ navigation, route }) => {
 
 
   const apicall = async () => {
-    const data = {
-      rider_name: sabmidatastore[0]?.ridername,
-      city: sabmidatastore[0]?.city,
-      security_amount: sabmidatastore[0]?.security_amount,
-      contact_number: sabmidatastore[0]?.contact,
-      payment_mode: sabmidatastore[2]?.paymentmode,
-      onboarding_type: sabmidatastore[2]?.boardingtype,
-      amount: sabmidatastore[2]?.amount,
-      receiver_name: sabmidatastore[1]?.paymentridername,
-      receiver_number: sabmidatastore[1]?.paymentcontactno,
-      week_advance: sabmidatastore[2]?.firstweekadvance,
-      client_name: sabmidatastore[2]?.clientname,
-      aadhaar_card_number: sabmidatastore[3]?.uploadAdharno,
-      pan_number: sabmidatastore[4]?.pancardno,
-      bank_account_details: sabmidatastore[6]?.currentaddress,
-      current_address: sabmidatastore[6]?.currentaddress,
-      vehicle_number: sabmidatastore[6]?.vechicleno,
-      charger_number: sabmidatastore[6]?.chargerno,
-      battery_one: sabmidatastore[6]?.batterone,
-      battery_two: sabmidatastore[6]?.battertwo,
-      remark: sabmidatastore[6]?.remark,
-    }
     //console.log("merge data",data)
     try {
-      // const response = await axios.get(`${baseUrl}`, {
+      const data = {
+        rider_name: sabmidatastore[0]?.ridername,
+        city: sabmidatastore[0]?.city,
+        security_amount: sabmidatastore[0]?.security_amount,
+        contact_number: sabmidatastore[0]?.contact,
+        payment_mode: sabmidatastore[2]?.paymentmode,
+        onboarding_type: sabmidatastore[2]?.boardingtype,
+        amount: sabmidatastore[2]?.amount,
+        receiver_name: sabmidatastore[1]?.paymentridername,
+        receiver_number: sabmidatastore[1]?.paymentcontactno,
+        week_advance: sabmidatastore[2]?.firstweekadvance,
+        client_name: sabmidatastore[2]?.clientname,
+        aadhaar_card_number: sabmidatastore[3]?.uploadAdharno,
+        pan_number: sabmidatastore[4]?.pancardno,
+        bank_account_details: sabmidatastore[6]?.currentaddress,
+        current_address: sabmidatastore[6]?.currentaddress,
+        vehicle_number: sabmidatastore[6]?.vechicleno,
+        charger_number: sabmidatastore[6]?.chargerno,
+        battery_one: sabmidatastore[6]?.batterone,
+        battery_two: sabmidatastore[6]?.battertwo,
+        remark: sabmidatastore[6]?.remark,
+        aadhaar_card_image: sabmidatastore[3]?.adharfileResponse[0],
+        pan_card_image: sabmidatastore[4]?.panfileResponse[0],
+        bank_account_details_image: sabmidatastore[5]?.panfileResponse[0],
+        click_photo_image: sabmidatastore[6]?.panfileResponse[0]
+      }
 
-      console.log("%%%%%%%%%%%%% data", data)
-      
-      let NewFormData = new FormData();
-      NewFormData.append('rider_name', 'harshu');
-      NewFormData.append('city', 'pune');
-      NewFormData.append('contact_number', '98266129255');
-      NewFormData.append('pay_type', 'cash');
-      NewFormData.append('onboarding_type', 'NBA');
-      NewFormData.append('receiver_name', 'spna');
-      NewFormData.append('receiver_number', '9999999999');
-      NewFormData.append('week_advance', '1233');
-      NewFormData.append('client_name', 'honda');
-      NewFormData.append('aadhaar_card_number', '881734444444');
-      NewFormData.append('pan_number', '1111111111111111');
-      NewFormData.append('bank_account_details', '1234567');
-      NewFormData.append('current_address', 'hariyana');
-      NewFormData.append('vehicle_number', '2345');
-      NewFormData.append('charger_number', '123');
-      NewFormData.append('remark', 'Hello guys');
-      NewFormData.append('battery_one', '1');
-      NewFormData.append('battery_two', '2');
-      NewFormData.append('security_amount', '12');
-      NewFormData.append('amount', '32');
+      const formData = new FormData();
+      //console.log("checkkkkkkk",formData) //object of array bn jata hai.
+      Object.keys(data).forEach(key => formData.append(key, data[key]));
 
+      console.log("######### NewFormData", formData)
+      // data.aadhaar_card_image_url = 
 
-      console.log("formDataNew", NewFormData)
-      const response = await axios.post(`http://43.204.22.176:3000/users`, {...data});
+      console.log("formDataNew", data)
+      const response = await axios.post(`http://43.204.22.176:3000/users`, formData);
       console.log("response", response)
     } catch (error) {
       console.log("An error has occurred", error);
@@ -108,7 +96,7 @@ export const Submitdata = ({ navigation, route }) => {
       {/* <TouchableOpacity
         onPress={() => apicall()}
         style={styles.buttoncontainer}>
-        <Text style={styles.buttontxt}>Api call</Text>
+        <Text style={styles.buttontxt}>Go To Home</Text>
       </TouchableOpacity> */}
       <TouchableOpacity
         onPress={() => navigation.navigate('Home')}
