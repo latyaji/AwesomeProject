@@ -1,15 +1,24 @@
-import { SafeAreaView, Image, View, Text, KeyboardAvoidingView, TouchableOpacity, TextInput, ScrollView, Platform, Alert, StyleSheet } from 'react-native';
-import React, { useCallback, useState, useEffect } from 'react';
-import DocumentPicker, { types } from 'react-native-document-picker';
-import { styles } from '../../style/Styles';
-import { upload } from '../../assest';
+import {
+  SafeAreaView,
+  Image,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  Platform,
+  Alert,
+  StyleSheet,
+} from 'react-native';
+import React, {useCallback, useState, useEffect} from 'react';
+import DocumentPicker, {types} from 'react-native-document-picker';
+import {styles} from '../../style/Styles';
+import {upload} from '../../assest';
 
-
-
-
-export const Address = ({ navigation, route }) => {
-  const { passbooksumbiteddata } = route?.params
-  console.log("address kai pehle ka dat", passbooksumbiteddata)
+export const Address = ({navigation, route}) => {
+  const {passbooksumbiteddata} = route?.params;
+  console.log('address kai pehle ka dat', passbooksumbiteddata);
   const [sumbiteddata, setsumbiteddata] = useState(passbooksumbiteddata); // Initialize with the submittedData
 
   const [validationErrors, setValidationErrors] = useState({
@@ -29,13 +38,10 @@ export const Address = ({ navigation, route }) => {
     battertwo: '',
     remark: '',
     panfileResponse: [],
-
-  })
-
+  });
 
   const handlePanDocumentSelection = useCallback(async () => {
     try {
-
       const response = await DocumentPicker.pick({
         presentationStyle: 'fullScreen',
         type: [
@@ -44,17 +50,13 @@ export const Address = ({ navigation, route }) => {
           DocumentPicker.types.plainText,
           DocumentPicker.types.video,
         ],
-        allowMultiSelection: true,
+        allowMultiSelection: false,
       });
-      setAddressuploaddata((prev) => ({ ...prev, panfileResponse: response }))
-
-
+      setAddressuploaddata(prev => ({...prev, panfileResponse: response}));
     } catch (err) {
-      console.warn("error====>>>>>> ", err);
+      console.warn('error====>>>>>> ', err);
     }
   }, []);
-
-
 
   const handleSubmit = () => {
     setValidationErrors({
@@ -66,35 +68,52 @@ export const Address = ({ navigation, route }) => {
       remark: '',
     });
 
-
     if (!addressuploaddata.currentaddress) {
-      setValidationErrors((prevState) => ({ ...prevState, currentAddress: 'Please enter Current Address' }));
+      setValidationErrors(prevState => ({
+        ...prevState,
+        currentAddress: 'Please enter Current Address',
+      }));
       return;
     }
 
     if (!addressuploaddata.vechicleno) {
-      setValidationErrors((prevState) => ({ ...prevState, vehicleNo: 'Please enter Vehicle No.' }));
+      setValidationErrors(prevState => ({
+        ...prevState,
+        vehicleNo: 'Please enter Vehicle No.',
+      }));
       return;
     }
     if (!addressuploaddata.chargerno) {
-      setValidationErrors((prevState) => ({ ...prevState, chargerNo: 'Please enter Charger No.' }));
+      setValidationErrors(prevState => ({
+        ...prevState,
+        chargerNo: 'Please enter Charger No.',
+      }));
       return;
     }
     if (!addressuploaddata.batterone) {
-      setValidationErrors((prevState) => ({ ...prevState, batteryOne: 'Please enter Battery 1' }));
+      setValidationErrors(prevState => ({
+        ...prevState,
+        batteryOne: 'Please enter Battery 1',
+      }));
       return;
     }
     if (!addressuploaddata.battertwo) {
-      setValidationErrors((prevState) => ({ ...prevState, batteryTwo: 'Please enter Battery 2' }));
+      setValidationErrors(prevState => ({
+        ...prevState,
+        batteryTwo: 'Please enter Battery 2',
+      }));
       return;
     }
     if (!addressuploaddata.remark) {
-      setValidationErrors((prevState) => ({ ...prevState, remark: 'Please enter Remark' }));
+      setValidationErrors(prevState => ({
+        ...prevState,
+        remark: 'Please enter Remark',
+      }));
       return;
     }
 
-    const sabmidatastore = sumbiteddata || []
-    setsumbiteddata([...sabmidatastore, addressuploaddata])
+    const sabmidatastore = sumbiteddata || [];
+    setsumbiteddata([...sabmidatastore, addressuploaddata]);
     setAddressuploaddata({
       currentaddress: '',
       vechicleno: '',
@@ -102,62 +121,70 @@ export const Address = ({ navigation, route }) => {
       batterone: '',
       battertwo: '',
       remark: '',
-      panfileResponse: []
-    })
+      panfileResponse: [],
+    });
 
-
-
-    navigation.navigate('Submitdata', { sabmidatastore: [...sabmidatastore, addressuploaddata] });
-  }
-
-
-
-
-
+    navigation.navigate('Submitdata', {
+      sabmidatastore: [...sabmidatastore, addressuploaddata],
+    });
+  };
 
   return (
-
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={100}
-        style={{ flex: 1 }} >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        style={{flex: 1}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <Text style={styles.headertxt}>Address Details</Text>
           <Text style={styles.labeltxt}>Current Address</Text>
           <TextInput
-            onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, currentaddress: text })}
+            onChangeText={text =>
+              setAddressuploaddata({...addressuploaddata, currentaddress: text})
+            }
             value={addressuploaddata.currentaddress}
-            style={styles.inputfield} />
+            style={styles.inputfield}
+          />
           {validationErrors.currentAddress ? (
-            <Text style={styles.errorText}>{validationErrors.currentAddress}</Text>
+            <Text style={styles.errorText}>
+              {validationErrors.currentAddress}
+            </Text>
           ) : null}
           <Text style={styles.labeltxt}>Vechicle No.</Text>
           <TextInput
-            onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, vechicleno: text })}
+            onChangeText={text =>
+              setAddressuploaddata({...addressuploaddata, vechicleno: text})
+            }
             value={addressuploaddata.vechicleno}
             maxLength={12}
-            keyboardType='numeric'
-            style={styles.inputfield} />
+            keyboardType="numeric"
+            style={styles.inputfield}
+          />
           {validationErrors.vehicleNo ? (
             <Text style={styles.errorText}>{validationErrors.vehicleNo}</Text>
           ) : null}
           <Text style={styles.labeltxt}>Charger No.</Text>
           <TextInput
-            keyboardType='numeric'
-            onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, chargerno: text })}
+            keyboardType="numeric"
+            onChangeText={text =>
+              setAddressuploaddata({...addressuploaddata, chargerno: text})
+            }
             value={addressuploaddata.chargerno}
-            style={styles.inputfield} />
+            style={styles.inputfield}
+          />
           {validationErrors.chargerNo ? (
             <Text style={styles.errorText}>{validationErrors.chargerNo}</Text>
           ) : null}
 
           <Text style={styles.labeltxt}>Battery 1</Text>
           <TextInput
-            keyboardType='numeric'
-            onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, batterone: text })}
+            keyboardType="numeric"
+            onChangeText={text =>
+              setAddressuploaddata({...addressuploaddata, batterone: text})
+            }
             value={addressuploaddata.batterone}
-            style={styles.inputfield} />
+            style={styles.inputfield}
+          />
 
           {validationErrors.batteryOne ? (
             <Text style={styles.errorText}>{validationErrors.batteryOne}</Text>
@@ -165,19 +192,24 @@ export const Address = ({ navigation, route }) => {
 
           <Text style={styles.labeltxt}>Battery 2</Text>
           <TextInput
-            keyboardType='numeric'
-            onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, battertwo: text })}
+            keyboardType="numeric"
+            onChangeText={text =>
+              setAddressuploaddata({...addressuploaddata, battertwo: text})
+            }
             value={addressuploaddata.battertwo}
-            style={styles.inputfield} />
+            style={styles.inputfield}
+          />
           {validationErrors.batteryTwo ? (
             <Text style={styles.errorText}>{validationErrors.batteryTwo}</Text>
           ) : null}
           <Text style={styles.labeltxt}>Remark</Text>
           <TextInput
-            onChangeText={(text) => setAddressuploaddata({ ...addressuploaddata, remark: text })}
+            onChangeText={text =>
+              setAddressuploaddata({...addressuploaddata, remark: text})
+            }
             value={addressuploaddata.remark}
             placeholder="Enter text here........"
-            placeholderTextColor={"#000"}
+            placeholderTextColor={'#000'}
             multiline={true}
             numberOfLines={5}
             keyboardType={
@@ -192,40 +224,59 @@ export const Address = ({ navigation, route }) => {
               marginHorizontal: 15,
               borderWidth: 1,
               margin: 12,
-              alignSelf: "center",
+              alignSelf: 'center',
               paddingLeft: 10,
-              color: "#000"
+              color: '#000',
             }}
           />
           {validationErrors.remark ? (
             <Text style={styles.errorText}>{validationErrors.remark}</Text>
           ) : null}
           <TouchableOpacity
-            style={{ width: "40%", marginTop: 20, marginLeft: 12, borderRadius: 12, justifyContent: "center", marginBottom: 12, alignItems: "center" }}
-            onPress={handlePanDocumentSelection} >
-            <View style={{ flexDirection: "row" }}>
+            style={{
+              width: '40%',
+              marginTop: 20,
+              marginLeft: 12,
+              borderRadius: 12,
+              justifyContent: 'center',
+              marginBottom: 12,
+              alignItems: 'center',
+            }}
+            onPress={handlePanDocumentSelection}>
+            <View style={{flexDirection: 'row'}}>
               <Text style={styles.labeltxt}>Upload Profile</Text>
-              <Image source={upload} style={{ width: 40, height: 30, marginTop: 10, alignSelf: "center" }} />
+              <Image
+                source={upload}
+                style={{
+                  width: 40,
+                  height: 30,
+                  marginTop: 10,
+                  alignSelf: 'center',
+                }}
+              />
             </View>
-
           </TouchableOpacity>
-          {addressuploaddata?.panfileResponse?.map((file, index) => (
-            addressuploaddata?.panfileResponse ? <Image source={{ uri: file?.uri }} style={{ width: 150, height: 150, borderRadius: 75, alignSelf: "center" }} /> : null
-          ))}
+          {addressuploaddata?.panfileResponse?.map((file, index) =>
+            addressuploaddata?.panfileResponse ? (
+              <Image
+                source={{uri: file?.uri}}
+                style={{
+                  width: 150,
+                  height: 150,
+                  borderRadius: 75,
+                  alignSelf: 'center',
+                }}
+              />
+            ) : null,
+          )}
 
           <TouchableOpacity
             onPress={handleSubmit}
-            style={styles.buttoncontainer}
-          >
+            style={styles.buttoncontainer}>
             <Text style={styles.buttontxt}>Submit</Text>
           </TouchableOpacity>
-
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
-  )
-}
-
-
-
-
+  );
+};

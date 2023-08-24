@@ -1,27 +1,22 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
+import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { styles } from '../../style/Styles';
+import {styles} from '../../style/Styles';
 import axios from 'axios';
+import RNFS from 'react-native-fs';
 
-const baseUrl = "http://43.204.22.176:3000/users";
+const baseUrl = 'https://145c-43-204-22-176.ngrok-free.app/users';
 //const baseUrl = "https://api.publicapis.org/entries";
 
-
-export const Submitdata = ({ navigation, route }) => {
-  const { sabmidatastore } = route?.params;
+export const Submitdata = ({navigation, route}) => {
+  const {sabmidatastore} = route?.params;
   //console.log("alldata===>>", sabmidatastore)
   // console.log("sabmidatastore[3333]=========!!!!!!!",sabmidatastore[3])
   // console.log("sabmidatastore[44444]=========!!!!!!!",sabmidatastore[4])
   // console.log("sabmidatastore[555555]=========!!!!!!!",sabmidatastore[5])
   // console.log("sabmidatastore[66666]=========!!!!!!!",sabmidatastore[6])
 
-
-
-
-
   useEffect(() => {
-
     // const fetchData = async () => {
     //   try {
     //     const data = await AsyncStorage.getItem('otherUserData');
@@ -42,17 +37,45 @@ export const Submitdata = ({ navigation, route }) => {
     apicall();
   }, [sabmidatastore]);
 
-
+  const toBase64 = (file: any) => {
+    console.log('!!!!!!!@@@@@@@@@', decodeURIComponent(file));
+    let url = decodeURIComponent(file).replace('content://', 'file://');
+    console.log('!!!!!!!@@@@@@@@@ url', url);
+    return new Promise((resolve, reject) => {
+      RNFS.readFile(file, 'base64')
+        .then(data => {
+          console.log('!!!!!!!!!!!!!', data);
+          resolve(data);
+        })
+        .catch(error => {
+          Alert.alert(JSON.stringify(error));
+          reject(error);
+        });
+    });
+  };
 
   const apicall = async () => {
-    //console.log("merge data",data)
     try {
+      console.log('!!!!!!!!!!!!!', sabmidatastore);
+      const base64Image1 = await toBase64(
+        sabmidatastore[3]?.adharfileResponse[0]?.uri,
+      );
+      const base64Image2 = await toBase64(
+        sabmidatastore[4]?.panfileResponse[0]?.uri,
+      );
+      const base64Image3 = await toBase64(
+        sabmidatastore[5]?.panfileResponse[0]?.uri,
+      );
+      const base64Image4 = await toBase64(
+        sabmidatastore[6]?.panfileResponse[0]?.uri,
+      );
+      console.log('!!!!!!!!!!!!!!!!!!!! base64Image1', base64Image1);
       const data = {
         rider_name: sabmidatastore[0]?.ridername,
         city: sabmidatastore[0]?.city,
-        security_amount: sabmidatastore[0]?.security_amount,
+        security_amount: sabmidatastore[0]?.securityamount,
         contact_number: sabmidatastore[0]?.contact,
-        payment_mode: sabmidatastore[2]?.paymentmode,
+        pay_type: sabmidatastore[2]?.paymentmode.toLowerCase(),
         onboarding_type: sabmidatastore[2]?.boardingtype,
         amount: sabmidatastore[2]?.amount,
         receiver_name: sabmidatastore[1]?.paymentridername,
@@ -68,42 +91,37 @@ export const Submitdata = ({ navigation, route }) => {
         battery_one: sabmidatastore[6]?.batterone,
         battery_two: sabmidatastore[6]?.battertwo,
         remark: sabmidatastore[6]?.remark,
-        aadhaar_card_image: sabmidatastore[3]?.adharfileResponse[0],
-        pan_card_image: sabmidatastore[4]?.panfileResponse[0],
-        bank_account_details_image: sabmidatastore[5]?.panfileResponse[0],
-        click_photo_image: sabmidatastore[6]?.panfileResponse[0]
-      }
+        aadhaar_card_image: base64Image1,
+        pan_card_image: base64Image2,
+        bank_account_details_image: base64Image3,
+        click_photo_image: base64Image4,
+      };
 
-      const formData = new FormData();
-      //console.log("checkkkkkkk",formData) //object of array bn jata hai.
-      Object.keys(data).forEach(key => formData.append(key, data[key]));
-
-      console.log("######### NewFormData", formData)
-      // data.aadhaar_card_image_url = 
-
-      console.log("formDataNew", data)
-      const response = await axios.post(`http://43.204.22.176:3000/users`, formData);
-      console.log("response", response)
+      console.log('formDataNew', data);
+      const response = await axios.post(
+        `https://145c-43-204-22-176.ngrok-free.app/users`,
+        {
+          body: data,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        },
+      );
+      console.log('response', response);
     } catch (error) {
-      console.log("An error has occurred", error);
-
+      console.log('***************** e', error);
     }
-  }
+  };
 
   return (
     <View style={styles.lastscreencontainer}>
       <Text style={styles.submittxt}>Thank You!!!!!!</Text>
-      {/* <TouchableOpacity
-        onPress={() => apicall()}
-        style={styles.buttoncontainer}>
-        <Text style={styles.buttontxt}>Go To Home</Text>
-      </TouchableOpacity> */}
+
       <TouchableOpacity
         onPress={() => navigation.navigate('Home')}
         style={styles.buttoncontainer}>
         <Text style={styles.buttontxt}>Go To Home</Text>
       </TouchableOpacity>
-
     </View>
   );
 };
